@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XR Stage Editor</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070812'/%3E%3Ccircle cx='32' cy='32' r='19' fill='%238449ff'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%230efefe'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header class="app-titlebar">
+      <div class="titlebar-left">
+        <span class="titlebar-title">XR Stage Editor</span>
+      </div>
+      <div class="titlebar-right">
+        <p id="xr-stage-status" class="status" role="status" aria-live="polite" data-state="ready"></p>
+        <button type="button" id="xr-stage-run">Run</button>
+        <button type="button" id="btn-reset-orbit" title="Reset view (R)">Reset View</button>
+        <button type="button" id="btn-popout-ledwall">Pop out</button>
+        <button
+          type="button"
+          id="btn-toggle-panel"
+          class="titlebar-icon-btn"
+          aria-label="Toggle preview panel"
+          aria-expanded="true"
+          title="Toggle preview"
+        >
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <rect x="1" y="2" width="14" height="12" rx="1" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <line x1="10" y1="2" x2="10" y2="14" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-body">
+      <h1 class="sr-only">XR Stage Editor</h1>
+
+      <div class="editor-panel">
+        <section class="controls" aria-label="Shader controls">
+          <textarea
+            id="xr-stage-editor"
+            spellcheck="false"
+            aria-label="Shader code editor"
+          ></textarea>
+        </section>
+      </div>
+
+      <div class="right-panel" id="right-panel">
+        <div class="panel-tabs" role="tablist">
+          <button
+            type="button"
+            class="tab-btn tab-btn--active"
+            id="tab-preview"
+            role="tab"
+            aria-selected="true"
+            aria-controls="tabpanel-preview"
+            tabindex="0"
+          >Preview</button>
+          <button
+            type="button"
+            class="tab-btn"
+            id="tab-patterns"
+            role="tab"
+            aria-selected="false"
+            aria-controls="tabpanel-patterns"
+            tabindex="-1"
+          >Patterns</button>
+        </div>
+
+        <div
+          class="tab-panel"
+          id="tabpanel-preview"
+          role="tabpanel"
+          aria-labelledby="tab-preview"
+        >
+          <section id="three" class="three-container" aria-label="projection mapping preview"></section>
+        </div>
+
+        <div
+          class="tab-panel"
+          id="tabpanel-patterns"
+          role="tabpanel"
+          aria-labelledby="tab-patterns"
+          hidden
+        >
+          <canvas
+            id="mini-preview"
+            class="mini-preview"
+            width="160"
+            height="160"
+            aria-hidden="true"
+          ></canvas>
+          <div class="patterns-toolbar">
+            <button type="button" id="btn-pattern-new">+ New</button>
+            <button type="button" id="btn-pattern-duplicate">Duplicate</button>
+            <button type="button" id="btn-pattern-rename" title="Rename pattern (F2)">Rename</button>
+            <button type="button" id="btn-pattern-delete">Delete</button>
+            <span class="toolbar-spacer"></span>
+            <div class="overflow-wrapper">
+              <button type="button" id="btn-overflow" class="btn-overflow" aria-label="More actions" aria-expanded="false">⋯</button>
+              <div class="overflow-menu" id="overflow-menu" hidden>
+                <button type="button" id="btn-pattern-import">Import</button>
+                <button type="button" id="btn-pattern-export">Export</button>
+                <button type="button" id="btn-pattern-delete-all" class="btn-danger">Delete All</button>
+              </div>
+            </div>
+          </div>
+          <ul id="pattern-list" class="pattern-list" aria-label="Patterns"></ul>
+        </div>
+      </div>
+    </main>
+
+    <canvas id="xr-stage-canvas" width="1024" height="1024" aria-hidden="true"></canvas>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
