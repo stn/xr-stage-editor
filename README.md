@@ -1,10 +1,12 @@
 # XR Stage Editor
 
-Three.js + Shadertoy GLSL によるリアルタイムプロジェクションマッピングエディタ
+A real-time projection mapping editor powered by Three.js + Shadertoy GLSL.
 
-## Three.js プリセットの書き方
+English | [日本語](README_ja.md)
 
-`createDirectRenderer()` を使うと、Three.js のシーンを直接投影テクスチャに反映できます。
+## Writing Three.js Presets
+
+Use `createDirectRenderer()` to render a Three.js scene directly onto the projection texture.
 
 ```javascript
 // @projector fov:42 pos:3,1.6,4.6 target:0,0.4,0
@@ -25,16 +27,16 @@ update = () => {
 }
 ```
 
-- `createProjectorCamera(near?, far?)` はプロジェクタ設定（FOV, 位置, ターゲット）に合わせた `PerspectiveCamera` を作成（aspect 1:1 固定）
-- `createDirectRenderer(opts?)` は `WebGLRenderer` を作成し、投影テクスチャとクリーンアップを自動設定
-- `renderer.shadowMap.enabled = true` 等の追加設定は `createDirectRenderer()` 呼び出し後に行う
-- `// @projector fov:42 pos:3,1.6,4.6 target:0,0.4,0` でプロジェクタ設定をカスタマイズ可能
+- `createProjectorCamera(near?, far?)` creates a `PerspectiveCamera` matching the projector settings (FOV, position, target) with a fixed 1:1 aspect ratio
+- `createDirectRenderer(opts?)` creates a `WebGLRenderer` and automatically sets up the projection texture and cleanup
+- Additional settings such as `renderer.shadowMap.enabled = true` should be applied after calling `createDirectRenderer()`
+- `// @projector fov:42 pos:3,1.6,4.6 target:0,0.4,0` customizes the projector configuration
 
-## Shadertoy からのインポート
+## Importing from Shadertoy
 
 ### `shadertoy()`
 
-`shadertoy()` は Shadertoy の GLSL コードを Three.js `RawShaderMaterial` で直接レンダリングします。GLSL 300 es (WebGL 2) の全機能が使え、元のコードをほぼそのまま実行できます。
+`shadertoy()` renders Shadertoy GLSL code directly via Three.js `RawShaderMaterial`. It supports the full GLSL 300 es (WebGL 2) feature set, allowing you to run the original code almost as-is.
 
 ```javascript
 shadertoy(`
@@ -49,28 +51,28 @@ float sdBox(vec3 p, vec3 b) {
 }
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-  // speed は uniform としてどこからでもアクセス可能
+  // speed is accessible anywhere as a uniform
   float t = iTime * speed;
   ...
 }
 `, { inputs: { speed: 1.0 } })
 ```
 
-`inputs` で渡した値は uniform としてコード全体からアクセス可能（ヘルパー関数内でも直接使える）
+Values passed via `inputs` are available as uniforms throughout the entire shader code (including inside helper functions).
 
-#### 未サポート
+#### Not Supported
 
-- `iChannel0` 等のテクスチャチャンネル
-- マルチパスレンダリング（Buffer A/B/C/D）
+- Texture channels such as `iChannel0`
+- Multi-pass rendering (Buffer A/B/C/D)
 
-## コマンド
+## Commands
 
 ```bash
-pnpm dev      # Vite dev server 起動
-pnpm build    # プロダクションビルド
-pnpm preview  # プロダクションビルドのプレビュー
+pnpm dev      # Start Vite dev server
+pnpm build    # Production build
+pnpm preview  # Preview production build
 ```
 
-## ライセンス
+## License
 
 MIT License.
