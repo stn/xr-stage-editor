@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export const OFFSCREEN_SIZE = 1024 * 2;
+export const OFFSCREEN_SIZE = 1024;
 
 export const CAMERA_FOV = 70;
 export const CAMERA_POS = new THREE.Vector3(3, 1.6, 4.6);
